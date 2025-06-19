@@ -1,62 +1,36 @@
-"""
-This module contains basic unit tests for math operations.
-Their purpose is to show how to use the pytest framework by example.
-"""
-
-# --------------------------------------------------------------------------------
-# Imports
-# --------------------------------------------------------------------------------
-
 import pytest
 
 
-# --------------------------------------------------------------------------------
-# A most basic test function
-# --------------------------------------------------------------------------------
-
-@pytest.mark.math
-def test_one_plus_one():
-  assert 1 + 1 == 2
+def test_one_plus_one_is_two():
+    assert 1 + 1 == 2
 
 
-# --------------------------------------------------------------------------------
-# A test function to show assertion introspection
-# --------------------------------------------------------------------------------
-
-@pytest.mark.math
-def test_one_plus_two():
-  a = 1
-  b = 2
-  c = 3
-  assert a + b == c
+def test_one_minus_one_is_zero():
+    assert 1 - 1 == 0
 
 
-# --------------------------------------------------------------------------------
-# A test function that verifies an exception
-# --------------------------------------------------------------------------------
+def test_one_minus_two_is_negative_one():
+    a = 1
+    b = 2
+    c = -1
+    assert a - b == c
 
-@pytest.mark.math
+
 def test_divide_by_zero():
-  with pytest.raises(ZeroDivisionError) as e:
-    num = 1 / 0
-  
-  assert 'division by zero' in str(e.value)
+    with pytest.raises(ZeroDivisionError) as error:
+        1 / 0  # type: ignore
+
+    assert 'division by zero' in str(error.value)
 
 
-# --------------------------------------------------------------------------------
-# A parametrized test function
-# --------------------------------------------------------------------------------
-
-products = [
-  (2, 3, 6),            # postive integers
-  (1, 99, 99),          # identity
-  (0, 99, 0),           # zero
-  (3, -4, -12),         # positive by negative
-  (-5, -5, 25),         # negative by negative
-  (2.5, 6.7, 16.75)     # floats
+combos = [
+    (1, 15, 15),
+    (100, 0, 0),
+    (-4, -5, 20),
+    (-10, 2, -20)
 ]
 
-@pytest.mark.math
-@pytest.mark.parametrize('a, b, product', products)
+
+@pytest.mark.parametrize('a, b, product', combos)
 def test_multiplication(a, b, product):
-  assert a * b == product
+    assert a * b == product
