@@ -1,17 +1,18 @@
 import pytest
 from stuff.accum import Accumulator
 
+pytestmark = [pytest.mark.accumulator, pytest.mark.unit]
+
 
 def test_accum_init(accum):
     assert accum.count == 0
 
 
-def test_cannot_set_count_directly(accum, accum2):
+def test_cannot_set_count_directly(accum):
     with pytest.raises(AttributeError, match=r"property 'count' of 'Accumulator' object has no setter") as e:
         accum.count = 1
 
 
-@pytest.mark.skip
 def test_accum_default_add(accum):
     accum.add()
     assert accum.count == 1
